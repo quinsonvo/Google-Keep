@@ -2,6 +2,10 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useToast } from 'vue-toastification'
+import NoteItem from './components/NoteItem.vue';
+import NoteList from './components/NoteList.vue';
+import NoteEditor from './components/NoteEditor.vue';
+
 const toast = useToast()
 
 const notes = ref([]);
@@ -62,40 +66,22 @@ onMounted(fetchNotes)
       <p v-if="isLoading">Đang tải...</p>
 
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
-        <div v-for="note in notes" :key="note.id"
-          :style="{ background: note.color, padding: '10px', borderRadius: '8px', minHeight: '100px' }"
-          @click="editingNote = { ...note }"
-        >
-          <h3>{{ note.title }}</h3> 
-          <p>{{ note.content }}</p>
-          <button @click.stop="deleteNote(note.id)" style="color: red;">🗑️ Xoá</button>
-          <button @click.stop="togglePin(note)">{{ note.pinned ? '📌 Bỏ ghim' : '📌 Ghim' }}</button>
-        </div>
-      </div>
+      <NoteList
+        :notes="notes"
+        @edit="editingNote = { ...$event }"
+        @delete="deleteNote"
+        @toggle-pin="togglePin"
+      />
     </main>
-    <div v-if="editingNote" class="modal">
-      <input v-model="editingNote.title" placeholder="Tiêu đề" />
-      <textarea v-model="editingNote.content" placeholder="Nội dung..." />
-      <input v-model="editingNote.color" type="color" />
-      <label><input type="checkbox" v-model="editingNote.pinned" /> Ghim</label>
-      <button @click="saveEdit">💾 Lưu</button>
-      <button @click="editingNote = null">❌ Đóng</button>
-    </div>
+    <NoteEditor
+      v-if="editingNote"
+      :note="editingNote"
+      @save="saveEdit"
+      @close="editingNote = null"
+    />
 
   </div>
 
 </template>
 <style>
-.modal {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  z-index: 999;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-}
 </style>
