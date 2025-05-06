@@ -11,6 +11,10 @@ router.get('/', (req, res) => {
 // Tạo mới note
 router.post('/', (req, res) => {
   const { title, content, color } = req.body;
+  if (!title && !content) {
+    return res.status(400).json({ error: 'Ghi chú trống!' })
+  }
+  
   const stmt = db.prepare(`
     INSERT INTO notes (title, content, color)
     VALUES (?, ?, ?)
@@ -24,6 +28,9 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const { title, content, color, pinned } = req.body;
   const id = req.params.id;
+  if (!title && !content) {
+    return res.status(400).json({ error: 'Ghi chú trống!' })
+  }
   
   db.prepare(`
     UPDATE notes
