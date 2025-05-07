@@ -9,6 +9,7 @@ db.prepare(`
     content TEXT,
     color TEXT DEFAULT '#ffffff',
     pinned INTEGER DEFAULT 0,
+    label TEXT DEFAULT '',
     created_at TEXT DEFAULT (datetime('now')),
     updated_at TEXT DEFAULT (datetime('now'))
   )

@@ -10,23 +10,24 @@ router.get('/', (req, res) => {
 
 // Tạo mới note
 router.post('/', (req, res) => {
-  const { title, content, color } = req.body;
+  const { title, content, color, pinned, label } = req.body;
   if (!title && !content) {
     return res.status(400).json({ error: 'Ghi chú trống!' })
   }
   
   const stmt = db.prepare(`
-    INSERT INTO notes (title, content, color)
-    VALUES (?, ?, ?)
+    INSERT INTO notes (title, content, color, pinned, label)
+    VALUES (?, ?, ?, ?, ?)
   `);
-  const result = stmt.run(title, content, color || '#ffffff');
+  const result = stmt.run(title, content, color || '#ffffff', pinned ? 1 : 0, label || '');
+  console.log(result);
   const newNote = db.prepare('SELECT * FROM notes WHERE id = ?').get(result.lastInsertRowid);
   res.status(201).json(newNote);
 });
 
 // Cập nhật note
 router.put('/:id', (req, res) => {
-  const { title, content, color, pinned } = req.body;
+  const { title, content, color, pinned, label } = req.body;
   const id = req.params.id;
   if (!title && !content) {
     return res.status(400).json({ error: 'Ghi chú trống!' })
@@ -34,9 +35,9 @@ router.put('/:id', (req, res) => {
   
   db.prepare(`
     UPDATE notes
-    SET title = ?, content = ?, color = ?, pinned = ?, updated_at = datetime('now')
+    SET title = ?, content = ?, color = ?, pinned = ?,label = ?, updated_at = datetime('now')
     WHERE id = ?
-  `).run(title, content, color, pinned ? 1 : 0, id);
+  `).run(title, content, color, pinned ? 1 : 0,label, id);
 
   const updatedNote = db.prepare('SELECT * FROM notes WHERE id = ?').get(id);
   res.json(updatedNote);

@@ -17,9 +17,10 @@ export function useNotes() {
   
   const createNote = async () => {
     if (!newNote.value.title && !newNote.value.content) return
-    await axios.post('http://localhost:3000/api/notes', newNote.value)
-    newNote.value = { title: '', content: '', color: '#ffffff' }
-    toast.success("Đã thêm ghi chú!")
+    await axios.post('http://localhost:3000/api/notes', newNote.value);
+    console.log(newNote.value);
+    newNote.value = { title: '', content: '', color: '#ffffff', pinned: 0 , label: '' };
+    toast.success("Đã thêm ghi chú!");
     fetchNotes()
   }
   

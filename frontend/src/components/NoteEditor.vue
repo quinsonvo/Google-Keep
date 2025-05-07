@@ -1,11 +1,10 @@
 <template>
   <div v-if="note" class="modal">
-    <input v-model="note.title" placeholder="Tiêu đề" />
-    <textarea v-model="note.content" placeholder="Nội dung..." />
-    <input v-model="note.color" type="color" />
-    <label>
-      <input type="checkbox" v-model="note.pinned" /> Ghim
-    </label>
+    <input v-model="note.title" placeholder="Tiêu đề" /><br>
+    <textarea v-model="note.content" placeholder="Nội dung..." /><br>
+    <input v-model="note.color" type="color" /><br>
+    <input v-model="note.label" placeholder="Nhãn (VD: Công việc, Cá nhân)" /><br>
+    <input type="checkbox" v-model="note.pinned" /> Ghim<br>
     <button @click="save">💾 Lưu</button>
     <button @click="close">❌ Đóng</button>
   </div>
@@ -37,7 +36,7 @@ export default {
   top: 20%;
   left: 50%;
   transform: translateX(-50%);
-  background: white;
+  background: black;
   padding: 20px;
   border-radius: 8px;
   z-index: 999;
