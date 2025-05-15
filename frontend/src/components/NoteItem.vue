@@ -5,8 +5,8 @@
   >
     <h3>{{ note.title }}</h3>
     <p>{{ note.content }}</p>
-    <button @click.stop="deleteNote" style="color: red;">🗑️ Xoá</button>
-    <button @click.stop="togglePin">{{ note.pinned ? '📌 Bỏ ghim' : '📌 Ghim' }}</button>
+    <div @click.stop="deleteNote" style="color: red;">🗑️</div>
+    <div @click.stop="togglePin">{{ note.pinned ? '📌' : '📌' }}</div>
   </div>
 </template>
 

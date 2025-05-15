@@ -6,7 +6,7 @@ export function useNotes() {
   const toast = useToast()
   const notes = ref([])
   const editingNote = ref(null)
-  const newNote = ref({ title: '', content: '', color: '#ffffff' })
+  const newNote = ref({ title: '', content: '', color: '#000000' })
   const isLoading = ref(false)
   const fetchNotes = async () => {
     isLoading.value = true
@@ -19,7 +19,7 @@ export function useNotes() {
     if (!newNote.value.title && !newNote.value.content) return
     await axios.post('http://localhost:3000/api/notes', newNote.value);
     console.log(newNote.value);
-    newNote.value = { title: '', content: '', color: '#ffffff', pinned: 0 , label: '' };
+    newNote.value = { title: '', content: '', color: '#000000', pinned: 0 , label: '' };
     toast.success("Đã thêm ghi chú!");
     fetchNotes()
   }
