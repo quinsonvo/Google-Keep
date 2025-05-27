@@ -33,8 +33,11 @@ export default {
 <style>
 .modal {
   position: fixed;
-  top: 20%;
+  top: 10px;
+  bottom: 10px;
   left: 50%;
+  height: 100%;
+  width: 400px;
   transform: translateX(-50%);
   background: black;
   padding: 20px;

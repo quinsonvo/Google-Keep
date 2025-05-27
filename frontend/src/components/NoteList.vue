@@ -1,27 +1,31 @@
 <template>
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+  <div style="gap: 10px;">
     <div v-if="pinnedNotes.length">
       <h3>📌 Được ghim</h3>
-      <NoteItem
-        v-for="note in pinnedNotes"
-        :key="note.id"
-        :note="note"
-        @edit="editNote"
-        @delete="deleteNote"
-        @toggle-pin="togglePin"
-      />
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <NoteItem
+          v-for="note in pinnedNotes"
+          :key="note.id"
+          :note="note"
+          @edit="editNote"
+          @delete="deleteNote"
+          @toggle-pin="togglePin"
+        />
+      </div>
     </div>
   
     <div v-if="otherNotes.length">
       <h3>📝 Ghi chú khác</h3>
-      <NoteItem
-        v-for="note in otherNotes"
-        :key="note.id"
-        :note="note"
-        @edit="editNote"
-        @delete="deleteNote"
-        @toggle-pin="togglePin"
-      />
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <NoteItem
+          v-for="note in otherNotes"
+          :key="note.id"
+          :note="note"
+          @edit="editNote"
+          @delete="deleteNote"
+          @toggle-pin="togglePin"
+        />
+      </div>
     </div>
   </div>
 </template>
